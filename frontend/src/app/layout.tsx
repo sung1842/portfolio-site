@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Jost } from "next/font/google";
 import { PROFILE_DATA } from "@/constants/profile";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,6 +70,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${jost.className} m-0 p-0 antialiased bg-[#050505] text-white`}>
         {children}
+        <Analytics />
       </body>
     </html>
   );

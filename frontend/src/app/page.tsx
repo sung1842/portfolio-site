@@ -75,27 +75,46 @@ export default function HomePage() {
 
       {/* About / Profile Section */}
       <section
-        className="flex flex-col items-center gap-6 px-4 py-16"
+        className="flex flex-col items-center gap-12 px-4 py-24 relative"
         aria-label="About section"
       >
+        {/* 상단 경계선 대신 은은한 그라디언트로 공간 분리 */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
         <h2
-          className="font-black uppercase text-white/20 text-center"
-          style={{ fontSize: "clamp(2rem, 5vw, 5rem)", letterSpacing: "-0.03em" }}
+          className="font-black uppercase text-white/10 text-center tracking-tighter"
+          style={{ fontSize: "clamp(3rem, 8vw, 7rem)", lineHeight: 1 }}
         >
           ABOUT ME
         </h2>
+        
         <div className="w-full max-w-5xl">
           <ProfileModal />
         </div>
-        <Link
-          href="/projects"
-          className="group flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-8 py-3 text-sm text-white/60 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
-        >
-          프로젝트 전체 보기
-          <span className="transition-transform duration-300 group-hover:translate-x-1">
-            →
-          </span>
-        </Link>
+
+        {/* 🚨 버튼 통일성 및 여백(mt-8) 강제 적용 🚨 */}
+        <div className="mt-8 mb-12">
+          <style dangerouslySetInnerHTML={{__html: `
+            .view-all-btn {
+              display: inline-flex; align-items: center; gap: 0.75rem;
+              padding: 1rem 2.5rem; border-radius: 9999px;
+              background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+              color: #ffffff; font-size: 0.875rem; font-weight: 800; letter-spacing: 0.15em;
+              backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+              transition: all 0.3s ease; text-decoration: none;
+              box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            }
+            .view-all-btn:hover {
+              background: rgba(255, 255, 255, 0.1);
+              transform: translateY(-4px);
+              border-color: rgba(255, 255, 255, 0.3);
+            }
+          `}} />
+          
+          <Link href="/projects" className="view-all-btn">
+            VIEW ALL PROJECTS <span style={{ fontSize: '1.2rem' }}>→</span>
+          </Link>
+        </div>
       </section>
     </div>
   );

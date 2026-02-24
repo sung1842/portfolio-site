@@ -54,13 +54,29 @@ export function ProfileModal() {
           border-radius: 9999px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
           white-space: nowrap; font-size: 0.875rem; font-weight: 700; color: #f1f5f9;
         }
+        
+        /* 기본(모바일) 환경에서는 폰트와 여백을 확 줄임 */
         .b-action-btn {
-          display: flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem;
+          display: flex; align-items: center; gap: 0.5rem; 
+          padding: 0.75rem 1.25rem; /* 패딩 축소 */
           border-radius: 9999px; background: #ffffff; color: #000000;
-          font-weight: 900; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em;
-          text-decoration: none; box-shadow: 0 0 30px rgba(255, 255, 255, 0.15); transition: transform 0.2s ease;
+          font-weight: 900; 
+          font-size: 0.75rem; /* 폰트 크기 축소 */
+          text-transform: uppercase; letter-spacing: 0.05em;
+          text-decoration: none; box-shadow: 0 0 20px rgba(255, 255, 255, 0.15); 
+          transition: transform 0.2s ease;
         }
         .b-action-btn:hover { transform: scale(1.05); background: #e2e8f0; }
+
+        /* 화면이 768px(PC) 이상일 때만 원래 크기로 뻥튀기 */
+        @media (min-width: 768px) {
+          .b-action-btn { 
+            padding: 1rem 2rem; 
+            font-size: 0.875rem; 
+            letter-spacing: 0.1em;
+            gap: 0.75rem;
+          }
+        }
 
         /* 이력서 다운로드 버튼 전용 스타일 */
         .resume-btn {

@@ -376,6 +376,29 @@ export function ProjectModal({ project }: ProjectModalProps) {
 
   return (
     <div className="relative flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden" style={{ borderRadius: 18 }}>
+      {/* [추가할 부분] 모바일 강제 1열 배치 CSS */}
+      <style dangerouslySetInnerHTML={{__html: `
+        /* 모바일 (767px 이하) 환경 */
+        @media (max-width: 767px) {
+          .modal-responsive-layout { 
+            flex-direction: column !important; 
+            overflow-y: auto !important; /* 모바일은 전체 스크롤 하나로 합침 */
+          }
+          .modal-responsive-layout > div { 
+            overflow-y: visible !important; /* 좌우 개별 스크롤 해제 */
+            flex: none !important; 
+          }
+          .trouble-grid { 
+            grid-template-columns: 1fr !important; /* 트러블슈팅 세로 1열 */
+          }
+        }
+        /* PC (768px 이상) 환경 */
+        @media (min-width: 768px) {
+          .trouble-grid { 
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important; /* 트러블슈팅 가로 3열 */
+          }
+        }
+      `}} />
       {/* ── 배경: 영상은 은은하게만, 오버레이로 본문 가독성 확보 ── */}
       <div className="absolute inset-0 z-0">
         {isVideo ? (
@@ -468,7 +491,7 @@ export function ProjectModal({ project }: ProjectModalProps) {
 
       {/* ── 2열: 왼쪽(담당 파트·기술흐름·기술목록) / 오른쪽(나머지), 항상 좌우 나란히, 각각 독립 스크롤 ── */}
       <div
-        className="relative z-20 flex flex-1 min-h-0 flex-row"
+        className="modal-responsive-layout relative z-20 flex flex-1 min-h-0 flex-row"
         style={{
           paddingLeft: "clamp(20px, 4vw, 40px)",
           paddingRight: "clamp(20px, 4vw, 40px)",
@@ -637,8 +660,8 @@ export function ProjectModal({ project }: ProjectModalProps) {
                 트러블 슈팅
               </p>
               <div
-                className="grid"
-                style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "clamp(14px,1.8vw,22px)" }}
+                className="trouble-grid grid"
+                style={{ gap: "clamp(14px,1.8vw,22px)" }}
               >
                 {project.troubleshooting.map((item, idx) => (
                   <div
