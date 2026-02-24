@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { clsx } from "clsx";
 import { ProjectCard } from "@/components/cards/ProjectCard";
@@ -34,24 +34,6 @@ export function Carousel3D({
   const [isDragging, setIsDragging] = useState(false);
   const virtualOffset = -dragOffset / PIXELS_PER_CARD;
   const { getCardStyle } = useCardTransform(activeIndex, virtualOffset);
-
-  /* ── 전환 락 (중복 이동 방지) ── */
-  const isNavigatingRef = useRef(false);
-  const navTimerRef     = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isMountedRef    = useRef(false);
-
-  const lockNavigation = useCallback(() => {
-    isNavigatingRef.current = true;
-    if (navTimerRef.current) clearTimeout(navTimerRef.current);
-    navTimerRef.current = setTimeout(() => {
-      isNavigatingRef.current = false;
-    }, 550);
-  }, []);
-
-  useEffect(() => {
-    if (!isMountedRef.current) { isMountedRef.current = true; return; }
-    lockNavigation();
-  }, [activeIndex, lockNavigation]);
 
   const isPointerDownRef = useRef(false);
   const startXRef        = useRef(0);
@@ -93,23 +75,41 @@ export function Carousel3D({
       if (idx >= 0) {
         if (idx === activeIndex) {
           onItemSelect(projects[idx].id);
-        } else if (!isNavigatingRef.current) {
-          lockNavigation();
+        } else {
           onActiveIndexChange(idx);
         }
       }
     } else {
-      const advance = Math.round(-dragOffsetRef.current / PIXELS_PER_CARD);
-      if (advance !== 0 && !isNavigatingRef.current) {
-        lockNavigation();
-        onActiveIndexChange(getWrappedIndex(activeIndex + advance, projects.length));
+      const dx = dragOffsetRef.current;
+      const absPx = Math.abs(dx);
+
+      // 너무 짧은 스와이프는 스냅백 (이동 없음)
+      if (absPx < 40) {
+        setIsDragging(false);
+        setDragOffset(0);
+        dragOffsetRef.current = 0;
+        return;
       }
+
+      // 스와이프 거리 기반으로 1~n장(최대 3, 그리고 전체 카드 수 - 1 이하)까지 이동
+      const maxStep = Math.min(3, Math.max(1, projects.length - 1));
+      let steps = 1;
+      if (absPx > 180 && maxStep >= 2) steps = 2;
+      if (absPx > 360 && maxStep >= 3) steps = 3;
+
+      // 방향: 오른쪽 드래그(dx > 0) → 이전 카드(-), 왼쪽 드래그(dx < 0) → 다음 카드(+)
+      const direction = dx > 0 ? -1 : 1;
+      const advance = direction * steps;
+
+      onActiveIndexChange(
+        getWrappedIndex(activeIndex + advance, projects.length)
+      );
     }
 
     setIsDragging(false);
     setDragOffset(0);
     dragOffsetRef.current = 0;
-  }, [activeIndex, onActiveIndexChange, onItemSelect, lockNavigation]);
+  }, [activeIndex, onActiveIndexChange, onItemSelect]);
 
   const handlePointerCancel = useCallback(() => {
     isPointerDownRef.current = false;

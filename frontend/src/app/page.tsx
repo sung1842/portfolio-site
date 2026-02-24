@@ -92,14 +92,18 @@ export default function HomePage() {
           <ProfileModal />
         </div>
 
-        {/* 🚨 버튼 통일성 및 여백(mt-8) 강제 적용 🚨 */}
-        <div className="mt-8 mb-12">
+        {/*  버튼 통일성 및 여백 강제 적용 (반응형 완벽 대응) */}
+        <div style={{ marginTop: 'clamp(3rem, 6vw, 5rem)', marginBottom: '4rem', textAlign: 'center', width: '100%' }}>
           <style dangerouslySetInnerHTML={{__html: `
             .view-all-btn {
-              display: inline-flex; align-items: center; gap: 0.75rem;
-              padding: 1rem 2.5rem; border-radius: 9999px;
+              display: inline-flex; align-items: center; justify-content: center;
+              gap: 0.5rem;
+              padding: 0.75rem 1.5rem; /* 모바일: 패딩 축소 */
+              border-radius: 9999px;
               background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-              color: #ffffff; font-size: 0.875rem; font-weight: 800; letter-spacing: 0.15em;
+              color: #ffffff; 
+              font-size: 0.75rem; /* 모바일: 폰트 축소 */
+              font-weight: 800; letter-spacing: 0.1em;
               backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
               transition: all 0.3s ease; text-decoration: none;
               box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
@@ -109,10 +113,19 @@ export default function HomePage() {
               transform: translateY(-4px);
               border-color: rgba(255, 255, 255, 0.3);
             }
+            /* PC (768px 이상) 환경에서 원래 크기로 복구 */
+            @media (min-width: 768px) {
+              .view-all-btn {
+                padding: 1rem 2.5rem;
+                font-size: 0.875rem;
+                letter-spacing: 0.15em;
+                gap: 0.75rem;
+              }
+            }
           `}} />
           
           <Link href="/projects" className="view-all-btn">
-            VIEW ALL PROJECTS <span style={{ fontSize: '1.2rem' }}>→</span>
+            VIEW ALL PROJECTS <span style={{ fontSize: '1.2em' }}>→</span>
           </Link>
         </div>
       </section>
