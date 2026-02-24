@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   keywords: [...PROFILE_DATA.keywords],
   authors: [{ name: PROFILE_DATA.name, url: PROFILE_DATA.github }],
   creator: PROFILE_DATA.name,
-  metadataBase: new URL("https://yourdomain.com"),
+  metadataBase: new URL("https://portfolio-site-alpha-umber.vercel.app"),
   openGraph: {
     type: "website",
     locale: "ko_KR",
