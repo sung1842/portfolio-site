@@ -101,8 +101,11 @@ export function ProfileModal() {
                 <p style={{ fontSize: '1.875rem', fontWeight: 900, letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Oh Sungwoo</p>
                 {/* 🚨 이력서 버튼 (강제 줄바꿈 방지) 🚨 */}
                 <div style={{ display: 'block' }}>
-                  <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="resume-btn">
-                    <Download size={16} /> VIEW RESUME
+                  <a 
+                    href="mailto:sungwoo0723@naver.com?subject=[이력서 요청] 오성우 풀스택 개발자 포트폴리오 열람 후 연락드립니다.&body=안녕하세요,%0D%0A%0D%0A포트폴리오를 인상 깊게 보았습니다.%0D%0A상세 이력서 및 포트폴리오 원본을 요청드립니다.%0D%0A%0D%0A- 소속 기업명: %0D%0A- 담당자 성함: %0D%0A- 회신받을 연락처: %0D%0A%0D%0A감사합니다." 
+                    className="resume-btn"
+                  >
+                    <Download size={16} /> REQUEST RESUME
                   </a>
                 </div>
               </div>
