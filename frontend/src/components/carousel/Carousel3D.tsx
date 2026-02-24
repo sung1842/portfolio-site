@@ -83,7 +83,7 @@ export function Carousel3D({
       const dx = dragOffsetRef.current;
       const absPx = Math.abs(dx);
 
-      // 너무 짧은 스와이프는 스냅백 (이동 없음)
+      // 너무 짧은 스와이프는 이동 없이 스냅백
       if (absPx < 40) {
         setIsDragging(false);
         setDragOffset(0);
@@ -91,15 +91,8 @@ export function Carousel3D({
         return;
       }
 
-      // 스와이프 거리 기반으로 1~n장(최대 3, 그리고 전체 카드 수 - 1 이하)까지 이동
-      const maxStep = Math.min(3, Math.max(1, projects.length - 1));
-      let steps = 1;
-      if (absPx > 180 && maxStep >= 2) steps = 2;
-      if (absPx > 360 && maxStep >= 3) steps = 3;
-
-      // 방향: 오른쪽 드래그(dx > 0) → 이전 카드(-), 왼쪽 드래그(dx < 0) → 다음 카드(+)
-      const direction = dx > 0 ? -1 : 1;
-      const advance = direction * steps;
+      // 항상 한 장만 이동: 오른쪽 드래그(dx > 0) → 이전 카드(-1), 왼쪽 드래그(dx < 0) → 다음 카드(+1)
+      const advance = dx > 0 ? -1 : 1;
 
       onActiveIndexChange(
         getWrappedIndex(activeIndex + advance, projects.length)

@@ -111,7 +111,7 @@ export const projects: Project[] = [
         cause:
           "사용자의 스와이프 제스처에 따라 회전 각도나 현재 인덱스를 React의 상태(useState)로 실시간 업데이트할 때마다, 캐러셀 내부의 모든 카드 컴포넌트가 불필요하게 연쇄 리렌더링(Re-rendering)을 일으킴. 또한, 복잡한 3D Transform 연산이 CPU에 집중되어 브라우저 렌더링 파이프라인에 병목이 발생함.",
         solution:
-          "렌더링 사이클 우회: React 상태 업데이트 대신 Framer Motion의 useMotionValue와 useTransform을 도입하여, React 렌더 트리를 거치지 않고 DOM 노드의 애니메이션 값을 직접 주입(Bypass)하는 구조로 전면 개편. GPU 하드웨어 가속: CSS will-change: transform과 translateZ(0)를 적용해 3D 회전 연산을 CPU에서 GPU로 오프로드(Offload). 물리 엔진 튜닝: 이동 거리(Offset) 비례 계산이 아닌, 사용자 손가락 튕김 속도(Velocity)를 추출해 Spring 물리 엔진에 가중치로 부여.",
+          "React 렌더 트리가 매 프레임마다 전체 캐러셀을 다시 그리지 않도록, 드래그 중에는 상태 업데이트를 최소화하고 카드 회전은 Framer Motion의 spring 애니메이션과 3D transform(x, z, rotateY) 계산에만 위임하는 구조로 단순화했다. CSS will-change: transform과 3D transform(translateZ 등)을 사용해 GPU가 transform 파이프라인을 최대한 처리하도록 하고, 스와이프는 pointer up 시점에 한 번만 activeIndex를 갱신하도록 제한해 불필요한 리렌더링을 제거했다.",
         result:
           "불필요한 리렌더링 횟수를 90% 이상 억제하여 모바일에서도 부드러운 60fps 애니메이션을 확보함. 웹 브라우저 한계를 넘어 네이티브 앱(Native App) 수준의 쫀득하고 즉각적인 조작감을 달성함.",
         metrics: {
