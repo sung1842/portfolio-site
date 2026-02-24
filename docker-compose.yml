@@ -1,0 +1,16 @@
+services:
+  # MySQL 데이터베이스 서비스
+  db:
+    image: mysql:8.0
+    container_name: portfolio-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: tiger1234
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3307:3306" # 로컬:컨테이너
+    volumes:
+      - db_data:/var/lib/mysql # 컨테이너 꺼도 데이터 유지되게 설정
+
+volumes:
+  db_data:

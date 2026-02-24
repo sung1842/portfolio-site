@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # Docker MySQL 주소 (포트 주의)
+    url: jdbc:mysql://localhost:3307/mydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: root
+    password: tiger1234
+
+  jpa:
+    hibernate:
+      # 개발 초기에는 update, 운영 시에는 validate나 none으로 바꿔야 함
+      ddl-auto: update
+    show-sql: true # 실행되는 SQL을 로그로 보여줌
+    properties:
+      hibernate:
+        format_sql: true # SQL을 예쁘게 출력
+        dialect: org.hibernate.dialect.MySQLDialect
