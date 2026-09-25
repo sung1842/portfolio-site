@@ -1,50 +1,41 @@
 ---
 name: add-portfolio-project
-description: Add a new project card and modal to Oh Sungwoo's portfolio site. Use when the user wants to add a new project, update project info, change tech stack icons, modify card design, or work on ProjectCard/ProjectModal/Projects.ts. Covers the full workflow: data → card → modal.
+description: Add a new project card and modal to Oh Sungwoo's portfolio site. Use when the user wants to add a new project, update project info, change tech stack icons, modify card design, or work on ProjectCard/ProjectModal/projects. Covers the full workflow: Supabase row → card → modal mindmap.
 ---
 
 # Add Portfolio Project
 
+## Data sources (split on purpose)
+
+| Surface | Source | Why |
+|---------|--------|-----|
+| Home 3D carousel | Local seed `constants/Projects.ts` via `getFeaturedProjects()` | Fast first paint — do **not** fetch Supabase on home |
+| View All `/projects` + archive detail | Supabase `projects` (+ `archiveProjects` fallback/enrich) | Cards beyond the home trio live in DB / archive seed |
+| Media | Prefer `project-media` public URLs; local `/public` only for critical offline demos (e.g. `omr-demo.mp4`) | |
+
+Home carousel projects stay **bundled in the app**. New featured home cards = edit `Projects.ts` seed. New archive-only cards = Supabase row with `featured: false` **and** mirror into `archiveProjects.ts` for enrich/fallback.
+
 ## File Map
 
 ```
-src/constants/Projects.ts        ← 프로젝트 데이터 (단일 진실 공급원)
+src/lib/supabase.ts              ← anon 클라이언트
+src/lib/projects.ts              ← getProjects / getFeaturedProjects
+src/lib/media.ts                 ← project-media public URL
+src/constants/Projects.ts        ← 타입 + 오프라인 seed fallback
 src/utils/projectHelpers.ts      ← 아이콘 매핑 (getTechMeta, getProjectIcon)
 src/utils/neonStyles.ts          ← 카드 네온 색상 (id 기반)
-src/components/cards/
-  ProjectCard.tsx                ← 3D 캐러셀 카드 UI
-  ProfileCard.tsx                ← 프로필 카드 (id:0 전용)
-  CardShell.tsx                  ← 카드 공통 래퍼
-  BaseCard.tsx                   ← header/content/footer 레이아웃
-src/components/modals/
-  ProjectModal.tsx               ← 프로젝트 상세 모달 (영상 풀스크린)
-  ProfileModal.tsx               ← 프로필 상세 모달
+src/components/cards/            ← 3D 캐러셀 카드 UI
+src/components/modals/           ← 프로젝트 상세 모달
+supabase/migrations/             ← projects 스키마 + Storage 버킷
 ```
 
-## Step 1 — Projects.ts에 데이터 추가
+## Step 1 — 영상 업로드
 
-```ts
-// src/constants/Projects.ts
-{
-  id: 3,                          // 기존 최대 id + 1
-  title: "PROJECT NAME",
-  description: "상세 설명 (한국어, 2-4문장)",
-  tagline: "한 줄 요약",
-  category: "AI Project",         // "AI Project" | "E-Commerce" | "Web App" | "Mobile"
-  color: "from-indigo-800 to-purple-900",  // Tailwind gradient (카드 fallback)
-  image: "/demo.mp4",             // mp4 → 자동으로 video 태그 렌더링
-                                  // jpg/png → img 태그
-  logo: "/logo.webp",             // 선택: 카드 우측 상단 + 모달 카테고리 아이콘
-  tech: ["Flask", "React", "Gemini"],  // projectHelpers.ts의 TECH_META_MAP 키와 일치
-  github: "https://github.com/...",
-  live: "",
-}
-```
+소개 영상은 `higgsfield-portfolio-video` 스킬로 만든 뒤, `project-media` 버킷(public)에 mp4/webp를 올리고 public URL을 `image` / `logo`에 저장한다. `/public`에 넣지 않는다.
 
-**규칙:**
-- `image`가 `.mp4`면 `isVideoAsset()` 함수가 자동 감지 → video 태그 사용
-- `logo`가 있으면 카드 우측 상단 + 모달 카테고리 아이콘에 사용
-- `tech` 배열 키는 반드시 `TECH_META_MAP`에 있는 키와 정확히 일치해야 함
+## Step 1b — `projects` 행 추가
+
+홈 캐러셀에 안 보이게 하려면 `featured: false`. View All(`/projects`)에는 그대로 나온다.
 
 ## Step 2 — 아이콘 추가 (새 기술일 때만)
 
@@ -113,7 +104,8 @@ description
 ## 체크리스트
 
 새 프로젝트 추가 시:
-- [ ] `Projects.ts` — 새 객체 추가 (id 중복 없이)
+- [ ] Supabase `projects` 행 추가 (id 중복 없이, 필요 시 `featured: false`)
+- [ ] `project-media`에 영상/로고 업로드 후 URL 저장
 - [ ] `projectHelpers.ts` — 새 tech가 있으면 `TECH_META_MAP`에 추가
 - [ ] `projectHelpers.ts` — `getProjectIcon` 분기 추가 (필요 시)
 - [ ] `neonStyles.ts` — 새 id의 색상 스키마 추가
@@ -141,3 +133,4 @@ description
 ## 상세 참고
 
 - 아이콘/색상 전체 목록 → [icons-reference.md](icons-reference.md)
+- 소개 영상 생성 → [higgsfield-portfolio-video](../higgsfield-portfolio-video/SKILL.md)

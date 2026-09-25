@@ -19,11 +19,12 @@ import {
   SiClaude,
   SiSocketdotio,
   SiNaver,
+  SiOpencv,
+  SiSupabase,
+  SiVercel,
 } from "react-icons/si";
 import type { IconType } from "react-icons";
-import { projects } from "@/constants/Projects";
-
-type Project = (typeof projects)[number];
+import type { Project } from "@/constants/Projects";
 
 interface TechMeta {
   icon: IconType;
@@ -56,6 +57,13 @@ const TECH_META_MAP: Record<string, TechMeta> = {
   "Spring Security":  { icon: SiSpring,            color: "#6DB33F" },
   "WebSocket":        { icon: SiSocketdotio,       color: "#010101" },
   "NAVER API":        { icon: SiNaver,             color: "#03C75A" },
+  "OpenCV":           { icon: SiOpencv,            color: "#5C3EE8" },
+  "Supabase":         { icon: SiSupabase,          color: "#3ECF8E" },
+  "Vercel":           { icon: SiVercel,            color: "#FFFFFF" },
+  "OmniRoute":        { icon: SiNextdotjs,         color: "#34D399" },
+  "Claude":           { icon: SiClaude,            color: "#D4956A" },
+  "Tailwind":         { icon: SiTailwindcss,       color: "#06B6D4" },
+  "Framer":           { icon: SiFramer,             color: "#BB4EFF" },
 };
 
 const FALLBACK_META: TechMeta = { icon: Code2, color: "#FFFFFF" };
@@ -81,6 +89,8 @@ export function getProjectIcon(project: Project): IconType {
   const text = (project.title + project.category).toLowerCase();
 
   if (text.includes("portfolio"))                                return SiClaude;
+  if (text.includes("omr"))                                      return SiOpencv;
+  if (text.includes("openrelay"))                                return SiNextdotjs;
   if (text.includes("twinstar"))                                 return SiGooglegemini;
   if (text.includes("react") || text.includes("native"))        return SiReact;
   if (text.includes("next"))                                     return SiNextdotjs;

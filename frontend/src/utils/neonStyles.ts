@@ -1,6 +1,4 @@
-import { projects } from "@/constants/Projects";
-
-type Project = (typeof projects)[number];
+import type { Project } from "@/constants/Projects";
 
 /**
  * Neon Color Scheme 타입 정의
@@ -36,17 +34,21 @@ const NEON_SCHEMES: Record<number, NeonScheme> = {
     borderColor: "rgba(0, 255, 255, 0.25)",
   },
   4: {
-    color1: "rgba(255, 0, 128, 0.6)", // Magenta
-    color2: "rgba(0, 255, 255, 0.6)", // Cyan
-    borderColor: "rgba(255, 0, 128, 0.25)",
+    color1: "rgba(16, 185, 129, 0.6)", // Emerald
+    color2: "rgba(34, 211, 238, 0.55)", // Cyan
+    borderColor: "rgba(34, 211, 238, 0.3)",
   },
 };
+
+export function getProjectNeonScheme(project: Project): NeonScheme {
+  return NEON_SCHEMES[project.id] || NEON_SCHEMES[((project.id - 1) % 4) + 1];
+}
 
 /**
  * 프로젝트 ID 기반으로 동적 Neon 스타일 생성
  */
 export function getProjectNeonStyle(project: Project): React.CSSProperties {
-  const scheme = NEON_SCHEMES[project.id] || NEON_SCHEMES[((project.id - 1) % 4) + 1];
+  const scheme = getProjectNeonScheme(project);
 
   return {
     backgroundColor: "#050505",

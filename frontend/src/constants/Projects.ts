@@ -1,4 +1,6 @@
-export type ProjectCategory = "Profile" | "AI Project" | "E-Commerce" | "Web App" | "Mobile" | "Portfolio" | "Vibe Coding";
+﻿import { archiveProjects } from "@/constants/archiveProjects";
+
+export type ProjectCategory = "Profile" | "AI Project" | "E-Commerce" | "Web App" | "Mobile" | "Portfolio" | "Vibe Coding" | "Research";
 
 export interface ProjectRole {
   part: "Frontend" | "Backend" | "Design" | "AI" | "DevOps";
@@ -39,6 +41,57 @@ export interface TechDecisionItem {
   detail: string;
 }
 
+export type ExperimentVerdict = "PASS" | "FAIL";
+
+export interface ExperimentCondition {
+  id: "P" | "F" | "H";
+  name: string;
+  model: string;
+  passed: number;
+  total: number;
+}
+
+export interface ExperimentLevel {
+  id: string;
+  label: string;
+  taskCount: number;
+  rates: { P: number; F: number; H: number };
+}
+
+export interface ExperimentTaskResult {
+  id: string;
+  title: string;
+  P: ExperimentVerdict;
+  F: ExperimentVerdict;
+  H: ExperimentVerdict;
+}
+
+export interface ExperimentFailure {
+  task: string;
+  label: string;
+  detail: string;
+}
+
+export interface ExperimentPlugin {
+  name: string;
+  role: string;
+  summary: string;
+}
+
+export interface ExperimentStudy {
+  planning: string[];
+  hypothesis: string;
+  methodNote: string;
+  conditions: ExperimentCondition[];
+  levels: ExperimentLevel[];
+  tasks: ExperimentTaskResult[];
+  failures: ExperimentFailure[];
+  stopClaim: string;
+  keepClaim: string;
+  positioning: string;
+  plugins: ExperimentPlugin[];
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -65,13 +118,19 @@ export interface Project {
   troubleshooting?: TroubleshootingItem[];
   /** 기술적 의사결정 (왜 이 기술을 선택했는가) */
   techDecisions?: TechDecisionItem[];
+  /** 실험형 상세. 있으면 담당 파트/트러블슈팅 대신 실험 본문을 렌더한다. */
+  experiment?: ExperimentStudy;
   github: string;
   live: string;
+  /** false면 홈 캐러셀에서 숨기고 View All에만 표시 */
+  featured?: boolean;
 }
 
-/** 확장자로 mp4 여부 판별 */
-export function isVideoAsset(path: string): boolean {
-  return path.toLowerCase().endsWith(".mp4");
+/** 확장자로 mp4 여부 판별 (Storage URL + query string 허용) */
+export function isVideoAsset(path: string | undefined | null): boolean {
+  if (!path) return false;
+  const clean = path.split("?")[0].split("#")[0].toLowerCase();
+  return clean.endsWith(".mp4") || clean.endsWith(".webm");
 }
 
 export const projects: Project[] = [
@@ -277,10 +336,11 @@ export const projects: Project[] = [
   },
 ];
 
-/** /projects 필터에서 사용할 전체 기술 스택 목록 (자동 추출) */
+/** /projects 필터에서 사용할 전체 기술 스택 목록 (캐러셀 + 아카이브) */
 export const allTechTags: string[] = Array.from(
-  new Set(projects.flatMap((p) => p.tech))
+  new Set([...projects, ...archiveProjects].flatMap((p) => p.tech))
 ).sort();
 
-/** 실제 프로젝트 목록 (전체) */
-export const portfolioProjects = projects;
+/** View All / 필터 그리드용 전체 목록 (캐러셀 + 아카이브) */
+export const portfolioProjects: Project[] = [...projects, ...archiveProjects];
+
