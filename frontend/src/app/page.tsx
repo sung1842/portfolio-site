@@ -83,11 +83,15 @@ export default function HomePage() {
 
         <h2
           className="font-black uppercase text-white/10 text-center tracking-tighter"
-          style={{ fontSize: "clamp(3rem, 8vw, 7rem)", lineHeight: 1 }}
+          style={{ fontSize: "clamp(3rem, 8vw, 7rem)", lineHeight: 1, zoom: 0.6 }}
         >
           ABOUT ME
         </h2>
-        
+
+        <div
+          className="flex w-full flex-col items-center"
+          style={{ zoom: 0.9 }}
+        >
         <div className="w-full max-w-5xl">
           <ProfileModal />
         </div>
@@ -127,6 +131,7 @@ export default function HomePage() {
           <Link href="/projects" className="view-all-btn">
             VIEW ALL PROJECTS <span style={{ fontSize: '1.2em' }}>→</span>
           </Link>
+        </div>
         </div>
       </section>
     </div>

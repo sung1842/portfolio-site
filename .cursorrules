@@ -74,3 +74,19 @@ You are an expert Senior Full Stack Developer specialized in:
 - Before writing code, briefly explain the "Why" and "How".
 - After writing code, suggest a verification step (e.g., "Check this URL", "Run this test").
 - If the user's request is ambiguous, ask clarifying questions first.
+
+# Portfolio Project Content Tone & Writing Rules (STRICT)
+Whenever creating, editing, or suggesting copy for project cards, detail modals, seeds, or DB rows (`Projects.ts`, `archiveProjects.ts`, modal components):
+1. **Full-Sentence Fields (`description`, `whyDeveloped`, `troubleshooting` problem/cause/solution/result, `techDecisions` detail):**
+   - **Tone:** STRICTLY 평서 문어체 (`~했다 / ~이다`). NEVER use `~습니다 / ~합니다`, `~함 / ~음` (음슴체), or `~하였다`.
+   - **Point of View:** Omit 1st-person pronouns ("저는", "제가", "나", "팀과 함께" 등 불필요한 주어 생략).
+   - **Objective / Engineering Tone:** Eliminate emotional, exaggerated, or colloquial modifiers (e.g., "쫀득한", "시니어급", "완벽하게", "획기적으로", "심각하게"). Express outcomes via concrete actions, metrics, or factual states.
+   - **Technical Terms:** Avoid excessive Korean+English duplicated parentheses (e.g., use "프레임 드랍" instead of "프레임 드랍(Frame Drop)과 버벅거림(Stuttering)").
+2. **Short Headings / Subtitles (`tagline`, `flowSteps` label, modal subtitles):**
+   - End with a noun phrase (명사구 종결), NO period.
+   - Example: "동물상 분석 기반 셀럽 패션 큐레이션 및 커머스 연동 서비스" (NOT "~연결하는 프로젝트입니다").
+3. **Role Items (`roles` detail):**
+   - End with noun phrases / 개조식 (e.g., "Spring Boot 기반 REST API 및 인증 파이프라인 설계"), NO trailing period.
+4. **Troubleshooting Items (`troubleshooting`):**
+   - `title`: Noun phrase clearly stating "Action/Method -> Improvement" (e.g., "Mono.zip 비동기 병렬 호출을 통한 외부 AI API 병목 개선").
+   - `problem`, `cause`, `solution`, `result`: ALL consistently end in `~했다 / ~이다`. Never mix `~함` with `~했다`.

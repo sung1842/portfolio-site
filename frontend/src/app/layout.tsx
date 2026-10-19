@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Jost } from "next/font/google";
+import { Geist, Geist_Mono, Jost, Noto_Sans_KR } from "next/font/google";
 import { PROFILE_DATA } from "@/constants/profile";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
@@ -16,6 +16,13 @@ const geistMono = Geist_Mono({
 
 const jost = Jost({
   subsets: ["latin"],
+});
+
+const notoSansKr = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-noto-sans-kr",
+  display: "swap",
 });
 
 /**
@@ -67,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={notoSansKr.variable}>
       <body className={`${jost.className} m-0 p-0 antialiased bg-[#050505] text-white`}>
         {children}
         <Analytics />

@@ -9,7 +9,7 @@ import { portfolioProjects, allTechTags, isVideoAsset, type ProjectCategory } fr
 import { getProjectIcon } from "@/utils/projectHelpers";
 import { getProjectNeonStyle } from "@/utils/neonStyles";
 
-const CATEGORIES: ProjectCategory[] = ["AI Project", "E-Commerce", "Web App", "Mobile"];
+const CATEGORIES: ProjectCategory[] = ["AI Project", "E-Commerce", "Web App", "Mobile", "Research"];
 
 /**
  * ProjectsGrid - 필터링 가능한 프로젝트 전체 보기 그리드

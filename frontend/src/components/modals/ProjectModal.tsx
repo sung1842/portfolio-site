@@ -395,23 +395,31 @@ export function ProjectModal({ project }: ProjectModalProps) {
         /* PC (768px 이상) 환경 */
         @media (min-width: 768px) {
           .trouble-grid { 
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important; /* 트러블슈팅 가로 3열 */
+            grid-template-columns: 1fr !important;
           }
         }
       `}} />
       {/* ── 배경: 영상은 은은하게만, 오버레이로 본문 가독성 확보 ── */}
-      <div className="absolute inset-0 z-0">
+      <div className="z-0" style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
         {isVideo ? (
           <video src={project.image} autoPlay loop muted playsInline
-            className="h-full w-full object-cover" style={{ opacity: 0.28 }}
             aria-label={`${project.title} 데모 영상`}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+              opacity: 0.28,
+            }}
           />
-        ) : (
+        ) : project.image ? (
           <Image src={project.image} alt="" fill sizes="94vw"
             className="object-cover" style={{ opacity: 0.28 }} loading="lazy"
             placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
           />
-        )}
+        ) : null}
         <div className="absolute inset-0"
           style={{ background: "linear-gradient(to top, rgba(18,18,18,0.97) 0%, rgba(18,18,18,0.9) 35%, rgba(18,18,18,0.6) 65%, rgba(18,18,18,0.25) 100%)" }}
           aria-hidden="true"
@@ -452,38 +460,77 @@ export function ProjectModal({ project }: ProjectModalProps) {
         </a>
       )}
 
-      {/* ── 고정 헤더: 제목·부제목 (GitHub 바로 아래) ── */}
+      {/* ── 고정 헤더: 제목·부제목 (모달 높이의 20%) ── */}
       <div
         className="relative z-20 shrink-0"
         style={{
-          paddingTop: "clamp(52px, 8vw, 64px)",
-          paddingLeft: "clamp(20px, 4vw, 40px)",
-          paddingRight: "clamp(20px, 4vw, 40px)",
-          paddingBottom: "clamp(12px, 1.5vw, 16px)",
+          minHeight: "20vh",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          paddingTop: "clamp(5vh, 6.5vh, 7.5vh)",
+          paddingLeft: "clamp(1.6vw, 4vw, 40px)",
+          paddingRight: "clamp(1.6vw, 4vw, 40px)",
+          paddingBottom: "clamp(0.8vh, 1.2vh, 1.6vh)",
         }}
       >
-        <div className="flex items-center" style={{ marginBottom: 6, gap: "clamp(10px,1.2vw,14px)" }}>
-          <div className="shrink-0 overflow-hidden rounded-lg" style={{ width: 32, height: 32, filter: DROP }}>
+        <div
+          className="flex items-center"
+          style={{ marginBottom: "clamp(0.4vh, 0.7vh, 1vh)", gap: "clamp(0.8vh, 1.2vh, 1.6vh)" }}
+        >
+          <div
+            className="shrink-0 overflow-hidden rounded-lg"
+            style={{
+              width: "clamp(2.2vh, 3vh, 3.6vh)",
+              height: "clamp(2.2vh, 3vh, 3.6vh)",
+              filter: DROP,
+            }}
+          >
             {project.logo ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={project.logo} alt="" className="h-full w-full object-contain" style={{ width: 32, height: 32 }} aria-hidden="true" />
+              <img
+                src={project.logo}
+                alt=""
+                className="h-full w-full object-contain"
+                aria-hidden="true"
+              />
             ) : (
-              <ProjectIcon style={{ width: 32, height: 32, color: isPortfolio ? "#D4956A" : "#fff", display: "block" }} aria-hidden="true" />
+              <ProjectIcon
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  color: isPortfolio ? "#D4956A" : "#fff",
+                  display: "block",
+                }}
+                aria-hidden="true"
+              />
             )}
           </div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+          <span
+            className="font-semibold uppercase tracking-widest text-slate-400"
+            style={{ fontSize: "clamp(1vh, 1.35vh, 1.7vh)" }}
+          >
             {project.category}
           </span>
         </div>
         <h2
           className="font-black leading-tight tracking-tight text-white"
-          style={{ fontSize: R.title, textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
+          style={{
+            fontSize: "clamp(2.2vh, 3.6vh, 4.4vh)",
+            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+          }}
         >
           {project.title}
         </h2>
         <p
-          className="mt-1.5 text-slate-300"
-          style={{ fontSize: R.tagline, lineHeight: 1.45, fontWeight: 600 }}
+          className="text-slate-300"
+          style={{
+            marginTop: "clamp(0.3vh, 0.5vh, 0.7vh)",
+            fontSize: "clamp(1.2vh, 1.7vh, 2.1vh)",
+            lineHeight: 1.4,
+            fontWeight: 600,
+          }}
         >
           {project.tagline}
         </p>
