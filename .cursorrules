@@ -90,3 +90,9 @@ Whenever creating, editing, or suggesting copy for project cards, detail modals,
 4. **Troubleshooting Items (`troubleshooting`):**
    - `title`: Noun phrase clearly stating "Action/Method -> Improvement" (e.g., "Mono.zip 비동기 병렬 호출을 통한 외부 AI API 병목 개선").
    - `problem`, `cause`, `solution`, `result`: ALL consistently end in `~했다 / ~이다`. Never mix `~함` with `~했다`.
+
+# Portfolio Detail Frame (STRICT)
+JD-FIT의 상세 화면이 기본 틀이다. 컴포넌트는 `BaseProjectDetail`.
+- 새 프로젝트는 이 틀에서 시작한다. 좌: 작업 방식(짧은 선 목록), 기술 흐름(있을 때만), 기술 칩. 우: 프로젝트 기획 문단, 트러블슈팅, 기술적 의사결정. 이모지 파이프라인은 기본 틀에 넣지 않는다.
+- 프로젝트 특색은 마인드맵 슬롯이나 별도 본문으로만 더한다. 틀 자체를 프로젝트마다 다시 만들지 않는다.
+- 이미 구현된 상세(id 0 PORTFOLIO, 1 TWINSTAR, 2 MINGLE, 3 OMR, 4 OPENRELAY)는 이 틀로 갈아끼우지 않는다. `usesLegacyProjectDetail`이 그 분기다.

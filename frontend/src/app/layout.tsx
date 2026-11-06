@@ -74,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={notoSansKr.variable}>
+    <html lang="ko" className={`${notoSansKr.variable} scroll-smooth`}>
       <body className={`${jost.className} m-0 p-0 antialiased bg-[#050505] text-white`}>
         {children}
         <Analytics />

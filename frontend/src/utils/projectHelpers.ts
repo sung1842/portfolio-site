@@ -22,6 +22,7 @@ import {
   SiOpencv,
   SiSupabase,
   SiVercel,
+  SiRedis,
 } from "react-icons/si";
 import type { IconType } from "react-icons";
 import type { Project } from "@/constants/Projects";
@@ -60,6 +61,7 @@ const TECH_META_MAP: Record<string, TechMeta> = {
   "OpenCV":           { icon: SiOpencv,            color: "#5C3EE8" },
   "Supabase":         { icon: SiSupabase,          color: "#3ECF8E" },
   "Vercel":           { icon: SiVercel,            color: "#FFFFFF" },
+  "Redis":            { icon: SiRedis,             color: "#DC382D" },
   "OmniRoute":        { icon: SiNextdotjs,         color: "#34D399" },
   "Claude":           { icon: SiClaude,            color: "#D4956A" },
   "Tailwind":         { icon: SiTailwindcss,       color: "#06B6D4" },
@@ -92,6 +94,7 @@ export function getProjectIcon(project: Project): IconType {
   if (text.includes("omr"))                                      return SiOpencv;
   if (text.includes("openrelay"))                                return SiNextdotjs;
   if (text.includes("twinstar"))                                 return SiGooglegemini;
+  if (text.includes("jd-fit") || text.includes("jdfit"))         return SiRedis;
   if (text.includes("react") || text.includes("native"))        return SiReact;
   if (text.includes("next"))                                     return SiNextdotjs;
   if (text.includes("spring") || text.includes("java"))         return SiSpring;

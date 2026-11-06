@@ -7,7 +7,7 @@ export const PROFILE_DATA = {
   nameKorean: "오성우",
   location: "서울특별시",
   email: "sungwoo0723@naver.com",
-  github: "https://github.com/yourusername",
+  github: "https://github.com/sung1842",
   
   // SEO & Meta
   title: "Oh Sungwoo - Full Stack Developer",

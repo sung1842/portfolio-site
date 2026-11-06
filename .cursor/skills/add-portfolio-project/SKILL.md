@@ -82,24 +82,25 @@ if (text.includes("projectname")) return SiNewIcon;
 
 반응형 크기: `clamp()` 기반 — `R` 상수 객체(`ProjectCard.tsx` 상단) 수정으로 전체 조정.
 
-## Step 5 — 모달 동작 확인
+## Step 5 — 상세 모달
 
-`ProjectModal.tsx`는 데이터만 받아 자동 렌더링. 별도 수정 불필요.
+기본 틀은 JD-FIT 상세다. 구현은 `BaseProjectDetail`. id 0–4(PORTFOLIO, TWINSTAR, MINGLE, OMR, OPENRELAY)는 레거시 모달을 유지하고, 이 틀로 갈아끼우지 않는다.
 
-모달 레이아웃:
+새 프로젝트는 `BaseProjectDetail`에 데이터만 넣는다. 특색은 `mindmap` 슬롯이나 별도 본문으로만 추가한다.
+
 ```
-[GitHub 버튼 ─ 좌상단]      [닫기 버튼 ─ 우상단]
-           (영상/이미지 풀스크린 배경 opacity:0.55)
-           (하단 흰색 그라디언트 오버레이)
-
-[로고] CATEGORY
+[GitHub]                          [닫기]
+아이콘  CATEGORY
 TITLE
-──── 스크롤 가능 영역 (maxHeight: 28vh) ────
 tagline
-description
-[Spring] [React] [Gemini]
-[Live Demo 버튼]
+
+왼쪽                              오른쪽
+작업 방식 (짧은 선 + 호버)         프로젝트 기획 (문단 카드)
+기술 흐름 (마인드맵, 있을 때만)     트러블 슈팅
+기술 칩                           기술적 의사결정 (같은 선 목록)
 ```
+
+이모지 흐름 칩은 기본 틀에 없다. `rolesHeading`은 `"작업 방식"`.
 
 ## 체크리스트
 

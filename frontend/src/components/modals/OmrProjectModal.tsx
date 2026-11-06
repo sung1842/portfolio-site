@@ -6,8 +6,9 @@ import {
   Cloud, ExternalLink, FilePlus2, ListChecks, Monitor, Palette, ScanLine, Server, type LucideIcon,
 } from "lucide-react";
 import { getTechMeta } from "@/utils/projectHelpers";
-import { Project, ProjectRole, isVideoAsset } from "@/constants/Projects";
+import { Project, isVideoAsset } from "@/constants/Projects";
 import { HEADER } from "@/components/modals/ArchiveProjectModal";
+import { TechDecisionsList } from "@/components/modals/TechDecisionsList";
 
 interface OmrProjectModalProps {
   project: Project;
@@ -200,7 +201,7 @@ function FeedList({ items }: { items: FeedItem[] }) {
   );
 }
 
-const PART_ICON: Record<ProjectRole["part"], LucideIcon> = {
+const PART_ICON: Record<string, LucideIcon> = {
   Design: Palette, Frontend: Monitor, Backend: Server, AI: ScanLine, DevOps: Cloud,
 };
 const OPERATION_ICONS: LucideIcon[] = [ListChecks, FilePlus2];
@@ -337,7 +338,7 @@ export function OmrProjectModal({ project }: OmrProjectModalProps) {
           {project.roles && project.roles.length > 0 && (
             <div style={{ marginBottom: "clamp(14px,1.6vw,20px)" }}>
               <SectionTitle index={1}>담당 파트</SectionTitle>
-              <FeedList items={project.roles.map(({ part, detail }) => ({ title: part, text: detail, icon: PART_ICON[part] }))} />
+              <FeedList items={project.roles.map(({ part, detail }) => ({ title: part, text: detail, icon: PART_ICON[part] ?? Monitor }))} />
             </div>
           )}
 
@@ -479,49 +480,7 @@ export function OmrProjectModal({ project }: OmrProjectModalProps) {
           </div>
 
           {project.techDecisions && project.techDecisions.length > 0 && (
-            <div
-              style={{
-                marginTop: "clamp(16px,2vw,24px)",
-                padding: "clamp(16px,2vw,22px) clamp(18px,2.2vw,26px)",
-                borderRadius: 16,
-                backgroundColor: "rgba(255,255,255,0.05)",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
-                border: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              <p style={{
-                fontSize: "clamp(0.78rem,1.1vw,0.95rem)",
-                fontWeight: 800,
-                color: "rgb(255,255,255)",
-                marginBottom: "clamp(8px,1vw,12px)",
-                letterSpacing: "0.04em",
-                borderLeft: "3px solid rgba(255,255,255,0.4)",
-                paddingLeft: "clamp(8px,1vw,12px)",
-              }}>
-                기술적 의사결정
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,1.4vw,16px)" }}>
-                {project.techDecisions.map((item, idx) => (
-                  <div
-                    key={`td-${idx}`}
-                    style={{
-                      padding: "clamp(12px,1.4vw,16px) clamp(14px,1.6vw,18px)",
-                      borderRadius: 12,
-                      backgroundColor: "rgba(0,0,0,0.2)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      borderLeft: "4px solid #64748b",
-                    }}
-                  >
-                    <p style={{ fontSize: "clamp(0.82rem,1.05vw,0.94rem)", fontWeight: 800, color: "rgb(255,255,255)", marginBottom: "clamp(6px,0.8vw,10px)" }}>
-                      {item.title}
-                    </p>
-                    <p style={{ fontSize: R.desc, color: "rgb(203,213,225)", lineHeight: 1.72 }}>
-                      {item.detail}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <TechDecisionsList items={project.techDecisions} />
           )}
 
           {project.live && (

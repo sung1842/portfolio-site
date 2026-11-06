@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PROFILE_DATA } from "@/constants/profile";
 import { projects } from "@/constants/Projects";
 import { HomeClientWrapper } from "@/components/home/HomeClientWrapper";
+import { ChiangResume } from "@/components/home/ChiangResume";
 import { ProfileModal } from "@/components/modals/ProfileModal";
 
 export default function HomePage() {
@@ -75,22 +76,24 @@ export default function HomePage() {
 
       {/* About / Profile Section */}
       <section
-        className="flex flex-col items-center gap-12 px-4 py-24 relative"
+        className="relative flex flex-col items-center gap-12 py-24"
         aria-label="About section"
       >
         {/* 상단 경계선 대신 은은한 그라디언트로 공간 분리 */}
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         <h2
-          className="font-black uppercase text-white/10 text-center tracking-tighter"
+          className="px-4 font-black uppercase text-white/10 text-center tracking-tighter"
           style={{ fontSize: "clamp(3rem, 8vw, 7rem)", lineHeight: 1, zoom: 0.6 }}
         >
           ABOUT ME
         </h2>
 
+        <ChiangResume />
+
         <div
-          className="flex w-full flex-col items-center"
-          style={{ zoom: 0.9 }}
+          className="flex w-full flex-col items-center px-4"
+          style={{ zoom: 0.9, paddingTop: "clamp(4.5rem, 9vw, 7.5rem)" }}
         >
         <div className="w-full max-w-5xl">
           <ProfileModal />

@@ -38,6 +38,11 @@ const NEON_SCHEMES: Record<number, NeonScheme> = {
     color2: "rgba(34, 211, 238, 0.55)", // Cyan
     borderColor: "rgba(34, 211, 238, 0.3)",
   },
+  5: {
+    color1: "rgba(66, 133, 244, 0.65)", // Gemini Blue
+    color2: "rgba(220, 56, 45, 0.55)",  // Redis Red
+    borderColor: "rgba(66, 133, 244, 0.3)",
+  },
 };
 
 export function getProjectNeonScheme(project: Project): NeonScheme {

@@ -6,6 +6,57 @@ import type { Project } from "@/constants/Projects";
  */
 export const archiveProjects: Project[] = [
   {
+    id: 2,
+    title: "MINGLE",
+    description:
+      "KREAM 플랫폼을 크롤링하여 한정판 스니커즈 데이터를 수집·가공하고, 실시간 양방향 통신 및 AI 챗봇을 연동한 리셀 플랫폼 풀스택 프로젝트다. 데이터 수집 파이프라인 구축부터 웹 인터페이스, WebSocket 기반 C2C 채팅, NAVER CLOVA X 챗봇 연동까지 전 과정을 구현했다.",
+    tagline: "KREAM 데이터 수집 및 실시간 통신 기반 리셀 플랫폼",
+    category: "E-Commerce",
+    color: "from-orange-700 to-red-900",
+    image: "/mingle-demo.mp4",
+    logo: "/logo-kream.webp",
+    tech: ["Spring Boot", "JavaScript", "AJAX", "MySQL", "WebSocket", "NAVER API"],
+    featured: false,
+    roles: [
+      {
+        part: "Design",
+        detail: "Figma 기반 협업을 통한 서비스 UI/UX 기획 및 전체 페이지 디자인",
+      },
+      {
+        part: "Frontend",
+        detail: "HTML·CSS·JavaScript·AJAX 기반 상품 목록·필터·구매 플로우 구현, WebSocket 실시간 채팅 및 NAVER CLOVA X API 챗봇 연동",
+      },
+      {
+        part: "Backend",
+        detail: "KREAM 크롤링 파이프라인 구축, Excel 문서화 및 MySQL 저장 자동화, Spring Boot 기반 상품 동기화 API 개발",
+      },
+    ],
+    whyDeveloped:
+      "웹 크롤링 기술을 활용해 실제 동작하는 한정판 거래 플랫폼을 구현하고자 기획했다. 데이터 수집, 관계형 데이터베이스 모델링, 실시간 양방향 채팅, 외부 AI API 연동에 이르는 풀스택 웹 개발 기초 역량을 체득한 프로젝트다.",
+    troubleshooting: [
+      {
+        title: "고비용 AI 챗봇의 C2C 실시간 WebSocket 채팅 피벗",
+        problem:
+          "초기 기획 당시 Clova X API 기반 챗봇 상담을 계획했으나, 트래픽 증가 시 예상되는 API 호출 비용이 운영 한계를 초과했다.",
+        cause:
+          "사용자 간 일상적인 문의와 거래 소통까지 고비용 LLM 호출에 의존하는 구조로 설계되었기 때문이다.",
+        solution:
+          "외부 AI 의존도를 낮추고 이용자 간 직접 소통을 유도하기 위해 WebSocket 기반 C2C 실시간 채팅으로 기능을 전환하고 양방향 통신 계층을 구축했다.",
+        result:
+          "지연 없는 1:1 거래 소통 환경을 마련함과 동시에 외부 API 비용 부담을 완전히 해소했다.",
+      },
+    ],
+    techDecisions: [
+      {
+        title: "Java 기반 자체 크롤러 구현을 통한 인프라 단일화",
+        detail:
+          "웹 크롤링에 널리 활용되는 Python 생태계 대신, 백엔드 단일화를 위해 Java(Jsoup) 기반 크롤러를 직접 개발했다. 별도의 Python 마이크로서비스를 운영하지 않고 Spring Boot 단일 인프라 내에서 데이터 수집과 동기화를 통합 관리하여 시스템 복잡도를 낮췄다.",
+      },
+    ],
+    github: "https://github.com/backcorail/mingle",
+    live: "",
+  },
+  {
     id: 3,
     title: "OMR PROGRAM",
     description:

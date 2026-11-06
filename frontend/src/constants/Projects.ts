@@ -3,7 +3,7 @@
 export type ProjectCategory = "Profile" | "AI Project" | "E-Commerce" | "Web App" | "Mobile" | "Portfolio" | "Vibe Coding" | "Research";
 
 export interface ProjectRole {
-  part: "Frontend" | "Backend" | "Design" | "AI" | "DevOps";
+  part: string;
   detail: string;
 }
 
@@ -108,8 +108,10 @@ export interface Project {
   tech: string[];
   /** 카드에 표시할 기술 3개 (없으면 tech 앞 3개 사용) */
   cardTech?: string[];
-  /** 담당 파트별 역할 분류 */
+  /** 담당 파트 / 작업 방식 목록 */
   roles?: ProjectRole[];
+  /** 왼쪽 열 목록 제목. 없으면 '담당 파트' */
+  rolesHeading?: string;
   /** 개발 이유 (왜 만들었는가) — 문제 해결 중심 서술 */
   whyDeveloped?: string;
   /** 프로젝트 기획 플로우 시각화 (예: [안면인식] → [스타일분석] → [쇼핑연동]) */
@@ -292,53 +294,67 @@ export const projects: Project[] = [
     live: "",
   },
   {
-    id: 2,
-    title: "MINGLE",
+    id: 5,
+    title: "JD-FIT",
     description:
-      "KREAM 플랫폼을 크롤링하여 한정판 스니커즈 데이터를 수집·가공하고, 실시간 양방향 통신 및 AI 챗봇을 연동한 리셀 플랫폼 풀스택 프로젝트다. 데이터 수집 파이프라인 구축부터 웹 인터페이스, WebSocket 기반 C2C 채팅, NAVER CLOVA X 챗봇 연동까지 전 과정을 구현했다.",
-    tagline: "KREAM 데이터 수집 및 실시간 통신 기반 리셀 플랫폼",
-    category: "E-Commerce",
-    color: "from-orange-700 to-red-900",
-    image: "/mingle-demo.mp4",
-    logo: "/logo-kream.webp",
-    tech: ["Spring Boot", "JavaScript", "AJAX", "MySQL", "WebSocket", "NAVER API"],
+      "채용 공고는 구인 플랫폼에 반복 적재되는 공개 데이터이고, 공고 요건과 후보의 공개 증거를 맞추는 일은 이미 채용 제품의 과제다. 공고 원문은 자동 수집 금지를 명시하지 않은 구인 사이트에서 Crawl4AI로 직접 수집했다. 유사 기능은 링크드인 등 기존 제품에 있으나 내부 매칭 구조는 공개되어 있지 않아 추정하지 않았고, 호출 비용과 동일 입력의 결과 안정성을 기준으로 설계했다. 이력서 관리와 후보 데스크는 이 매칭을 계정 흐름에서 검증하기 위한 최소 틀이다.",
+    tagline: "정규화·해시·코드 깔때기 기반 헤드헌팅 JD 핏 분석",
+    category: "AI Project",
+    color: "from-blue-800 to-rose-900",
+    image: "",
+    tech: ["TypeScript", "Next.js", "Gemini", "Claude", "Redis", "Supabase", "Docker", "Python"],
+    cardTech: ["TypeScript", "Gemini", "Redis"],
+    rolesHeading: "작업 방식",
     roles: [
       {
-        part: "Design",
-        detail: "Figma 기반 협업을 통한 서비스 UI/UX 기획 및 전체 페이지 디자인",
+        part: "정규화",
+        detail:
+          "Crawl4AI로 수집한 공고 본문의 정규화와 source_hash 변경 감지, 본문 불변 시 정규화 LLM과 매칭 큐 적재 생략",
       },
       {
-        part: "Frontend",
-        detail: "HTML·CSS·JavaScript·AJAX 기반 상품 목록·필터·구매 플로우 구현, WebSocket 실시간 채팅 및 NAVER CLOVA X API 챗봇 연동",
+        part: "코드 깔때기",
+        detail:
+          "A SQL 필수조건, B 기술 겹침·벡터 검색, C 결정적 순위식으로 후보를 상위 N명까지 축소",
       },
       {
-        part: "Backend",
-        detail: "KREAM 크롤링 파이프라인 구축, Excel 문서화 및 MySQL 저장 자동화, Spring Boot 기반 상품 동기화 API 개발",
+        part: "판단과 승인",
+        detail:
+          "상위 N명에 한정한 Gemini 좁은 분석과 Claude 1회 종합, 접촉은 pending_review 사람 승인",
+      },
+      {
+        part: "검증 틀",
+        detail:
+          "이력서 관리와 후보 데스크 등 매칭 루프를 계정 흐름에서 돌리기 위한 최소 화면",
       },
     ],
     whyDeveloped:
-      "웹 크롤링 기술을 활용해 실제 동작하는 한정판 거래 플랫폼을 구현하고자 기획했다. 데이터 수집, 관계형 데이터베이스 모델링, 실시간 양방향 채팅, 외부 AI API 연동에 이르는 풀스택 웹 개발 기초 역량을 체득한 프로젝트다.",
+      "채용 공고는 구인 플랫폼에 반복 적재되는 공개 데이터이고, 공고 요건과 후보의 공개 증거를 맞추는 일은 이미 채용 제품의 과제다. 공고 원문은 자동 수집 금지를 명시하지 않은 구인 사이트에서 Crawl4AI로 직접 수집했다. 유사 기능은 링크드인 등 기존 제품에 있으나 내부 매칭 구조는 공개되어 있지 않아 추정하지 않았고, 호출 비용과 동일 입력의 결과 안정성을 기준으로 설계했다.",
     troubleshooting: [
       {
-        title: "고비용 AI 챗봇의 C2C 실시간 WebSocket 채팅 피벗",
+        title: "source_hash 게이트와 코드 깔때기를 통한 LLM 호출 상한 분리",
         problem:
-          "초기 기획 당시 Clova X API 기반 챗봇 상담을 계획했으나, 트래픽 증가 시 예상되는 API 호출 비용이 운영 한계를 초과했다.",
+          "후보 전원과 본문이 바뀌지 않은 수정까지 LLM과 큐에 넣으면 호출 수가 풀 크기에 비례했고, 상시 매칭의 적재 순서도 섞였다.",
         cause:
-          "사용자 간 일상적인 문의와 거래 소통까지 고비용 LLM 호출에 의존하는 구조로 설계되었기 때문이다.",
+          "매칭마다 원문을 다시 모델에 넣었고, 내용이 같은 수정도 새 작업으로 큐에 들어가 워커 입력이 불필요하게 늘었다.",
         solution:
-          "외부 AI 의존도를 낮추고 이용자 간 직접 소통을 유도하기 위해 WebSocket 기반 C2C 실시간 채팅으로 기능을 전환하고 양방향 통신 계층을 구축했다.",
+          "등록 시 1회 정규화·임베딩했다. source_hash가 같으면 정규화 LLM을 건너뛰고 큐에 넣지 않았다. 매칭은 A SQL 필수조건, B 기술 겹침과 벡터 검색, C 결정적 순위식으로 줄였다. A~C는 같은 입력이면 같은 결과다. 상위 N명만 Gemini 좁은 분석과 Claude 1회 종합에 넣었고, 즉시 매칭과 상시 수색은 큐 우선순위로 나눴다. D단계는 스키마로 출력을 좁힌 판단이며 비트 단위로 동일하지는 않다.",
         result:
-          "지연 없는 1:1 거래 소통 환경을 마련함과 동시에 외부 API 비용 부담을 완전히 해소했다.",
+          "호출 수가 후보 풀 크기가 아니라 상한 N에 묶였다. 1만 명 가정에서 순진한 방식 5만 회 대비 상위 30명 기준 약 150회 상한이다. 해당 수치는 설계 상한이며 1만 명 실측은 아니다.",
       },
     ],
     techDecisions: [
       {
-        title: "Java 기반 자체 크롤러 구현을 통한 인프라 단일화",
+        title: "A~C는 코드로 고정하고 LLM은 정규화와 최종 판단에만 사용",
         detail:
-          "웹 크롤링에 널리 활용되는 Python 생태계 대신, 백엔드 단일화를 위해 Java(Jsoup) 기반 크롤러를 직접 개발했다. 별도의 Python 마이크로서비스를 운영하지 않고 Spring Boot 단일 인프라 내에서 데이터 수집과 동기화를 통합 관리하여 시스템 복잡도를 낮췄다.",
+          "비교와 정렬은 SQL, 기술 사전, 벡터 검색, 결정적 순위식의 담당이다. 동일 입력의 동일 결과는 이 구간의 성질이다. Gemini는 좁은 분석과 JSON Schema 강제에, Claude는 후보 1명당 1회 종합에만 썼다. 최종 판단은 확률적 생성이므로 깔때기와 같은 결정성을 주장하지 않았다.",
+      },
+      {
+        title: "공개 증거만 매칭하고 접촉은 사람 승인에 고정",
+        detail:
+          "AI는 사실·수치·산출물을 질문으로 캐내고, 매칭 입력은 사용자가 고른 공개 기록으로 한정했다. 비공개 기록은 점수에 넣지 않았다. 후보 접촉은 pending_review 상태값으로 사람 승인 후에만 실행하고, 워커는 승인 대기 중 종료했다.",
       },
     ],
-    github: "https://github.com/backcorail/mingle",
+    github: "https://github.com/sung1842/jd-fit-analyzer",
     live: "",
   },
 ];

@@ -5,11 +5,16 @@ import Image from "next/image";
 import {
   SiGithub, SiNextdotjs, SiReact, SiTypescript, SiFramer, SiTailwindcss, SiClaude, SiCodeium,
   SiFlask, SiDocker, SiMysql, SiGooglegemini, SiSpring, SiKeras, SiJavascript,
-  SiSocketdotio, SiNaver, SiFigma,
+  SiSocketdotio, SiNaver, SiFigma, SiRedis, SiSupabase,
 } from "react-icons/si";
 import { ExternalLink } from "lucide-react";
 import { getProjectIcon, getTechMeta } from "@/utils/projectHelpers";
-import { Project, ProjectRole, isVideoAsset } from "@/constants/Projects";
+import { Project, isVideoAsset } from "@/constants/Projects";
+import { BaseProjectDetail } from "@/components/modals/BaseProjectDetail";
+import { usesLegacyProjectDetail } from "@/components/modals/projectDetailMode";
+import { TroubleshootingList } from "@/components/modals/TroubleshootingList";
+import { RolesSection } from "@/components/modals/RolesSection";
+import { TechDecisionsList } from "@/components/modals/TechDecisionsList";
 
 interface ProjectModalProps {
   project: Project;
@@ -29,14 +34,6 @@ const R = {
 
 const SHADOW = "0 1px 2px rgba(0,0,0,0.12)";
 const DROP   = "drop-shadow(0 1px 3px rgba(0,0,0,0.22))";
-
-const PART_STYLE: Record<ProjectRole["part"], { accent: string; badgeBg: string; badgeText: string }> = {
-  Frontend: { accent: "#93c5fd", badgeBg: "rgba(255,255,255,0.1)", badgeText: "#fff" },
-  Backend:  { accent: "#86efac", badgeBg: "rgba(255,255,255,0.1)", badgeText: "#fff" },
-  Design:   { accent: "#f9a8d4", badgeBg: "rgba(255,255,255,0.1)", badgeText: "#fff" },
-  AI:       { accent: "#c4b5fd", badgeBg: "rgba(255,255,255,0.1)", badgeText: "#fff" },
-  DevOps:   { accent: "#fcd34d", badgeBg: "rgba(255,255,255,0.1)", badgeText: "#fff" },
-};
 
 /* ─────────────────────────────────────────
    공통 마인드맵 스타일 헬퍼
@@ -358,11 +355,106 @@ function MingleMindmap() {
   );
 }
 
+/* ─────────────────────────────────────────
+   마인드맵 — JD-FIT (전처리 깔때기 헤드헌팅 분석)
+───────────────────────────────────────── */
+function JdFitMindmap() {
+  const { subFs, iconSz, chip, sectionLabel, wrapper, arrow, hArrow } = MM;
+  return (
+    <div style={wrapper}>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "clamp(8px,1vw,12px)" }}>
+        <div style={{ ...chip("rgba(66,133,244,0.08)", "rgba(66,133,244,0.35)"), color: "#4285f4", minWidth: "auto", padding: "8px 20px", flexDirection: "row", gap: 8 }}>
+          <SiGooglegemini style={{ width: iconSz, height: iconSz, color: "#4285f4" }} />
+          <div style={{ textAlign: "left" }}>
+            <div>JD 정규화</div>
+            <div style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>Crawl4AI 수집 · normalize_job</div>
+          </div>
+        </div>
+      </div>
+
+      {arrow("본문 불변이면 LLM 0회 · 큐 제외")}
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(8px,1vw,14px)", flexWrap: "wrap", margin: "clamp(8px,1vw,12px) 0" }}>
+        <div style={{ ...chip("rgba(255,255,255,0.08)", "rgba(255,255,255,0.15)"), color: "rgb(203,213,225)" }}>
+          <span>source_hash</span>
+          <span style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>불변이면 큐 제외</span>
+        </div>
+        {hArrow()}
+        <div style={{ ...chip("rgba(49,120,198,0.08)", "rgba(49,120,198,0.35)"), color: "#3178c6" }}>
+          <SiTypescript style={{ width: iconSz, height: iconSz, color: "#3178c6" }} />
+          <span>skill dictionary</span>
+          <span style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>alias → canonical</span>
+        </div>
+      </div>
+
+      {arrow("A·B·C 코드")}
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(6px,0.8vw,10px)", flexWrap: "wrap", margin: "clamp(8px,1vw,12px) 0" }}>
+        <div style={{ ...MM.col, gap: 5 }}>
+          <span style={sectionLabel("#3ECF8E")}>깔때기</span>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
+            <div style={{ ...chip("rgba(62,207,142,0.08)", "rgba(62,207,142,0.35)"), color: "#3ECF8E" }}>
+              <SiSupabase style={{ width: iconSz, height: iconSz, color: "#3ECF8E" }} />
+              <span>A SQL</span>
+              <span style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>필수조건</span>
+            </div>
+            <div style={{ ...chip("rgba(62,207,142,0.08)", "rgba(62,207,142,0.35)"), color: "#3ECF8E" }}>
+              <span>B 벡터∪스킬</span>
+              <span style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>pgvector</span>
+            </div>
+            <div style={{ ...chip("rgba(62,207,142,0.08)", "rgba(62,207,142,0.35)"), color: "#3ECF8E" }}>
+              <span>C 순위식</span>
+              <span style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>결정적 점수</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {arrow("상위 N")}
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(8px,1vw,14px)", flexWrap: "wrap", margin: "clamp(8px,1vw,12px) 0" }}>
+        <div style={{ ...chip("rgba(66,133,244,0.08)", "rgba(66,133,244,0.35)"), color: "#4285f4" }}>
+          <SiGooglegemini style={{ width: iconSz, height: iconSz, color: "#4285f4" }} />
+          <span>Gemini Flash</span>
+          <span style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>tech · exp · culture</span>
+        </div>
+        {hArrow("1회 종합")}
+        <div style={{ ...chip("rgba(212,149,106,0.10)", "rgba(212,149,106,0.35)"), color: "#d4956a" }}>
+          <SiClaude style={{ width: iconSz, height: iconSz, color: "#d4956a" }} />
+          <span>Claude CEO</span>
+          <span style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>verdict</span>
+        </div>
+      </div>
+
+      {arrow("사람 승인")}
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(8px,1vw,14px)", flexWrap: "wrap", marginTop: "clamp(6px,0.8vw,10px)" }}>
+        <div style={{ ...chip("rgba(255,255,255,0.08)", "rgba(255,255,255,0.15)"), color: "rgb(203,213,225)", minWidth: "auto", padding: "8px 16px", flexDirection: "row", gap: 8 }}>
+          <SiNextdotjs style={{ width: iconSz, height: iconSz, color: "#fff" }} />
+          <div style={{ textAlign: "left" }}>
+            <div>데스크 HIL</div>
+            <div style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>즉시 매칭 · 상시 수색</div>
+          </div>
+        </div>
+        {hArrow("priority 10")}
+        <div style={{ ...chip("rgba(220,56,45,0.08)", "rgba(220,56,45,0.35)"), color: "#DC382D", minWidth: "auto", padding: "8px 16px", flexDirection: "row", gap: 8 }}>
+          <SiRedis style={{ width: iconSz, height: iconSz, color: "#DC382D" }} />
+          <div style={{ textAlign: "left" }}>
+            <div>Redis · BullMQ</div>
+            <div style={{ fontSize: subFs, color: "rgb(148,163,184)", fontWeight: 400 }}>워커 비블로킹</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* 프로젝트 ID에 따라 적절한 마인드맵 반환 */
 function ProjectMindmap({ projectId }: { projectId: number }) {
   if (projectId === 0) return <PortfolioMindmap />;
   if (projectId === 1) return <TwinstarMindmap />;
   if (projectId === 2) return <MingleMindmap />;
+  if (projectId === 5) return <JdFitMindmap />;
   return null;
 }
 
@@ -373,6 +465,10 @@ export function ProjectModal({ project }: ProjectModalProps) {
   const ProjectIcon = useMemo(() => getProjectIcon(project), [project]);
   const isVideo = isVideoAsset(project.image);
   const isPortfolio = project.id === 0;
+
+  if (!usesLegacyProjectDetail(project.id)) {
+    return <BaseProjectDetail project={project} mindmap={project.id === 5 ? <JdFitMindmap /> : null} />;
+  }
 
   return (
     <div className="relative flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden" style={{ borderRadius: 18 }}>
@@ -553,46 +649,7 @@ export function ProjectModal({ project }: ProjectModalProps) {
           style={{ scrollbarWidth: "none", msOverflowStyle: "none", minHeight: 0 }}
         >
           {project.roles && project.roles.length > 0 && (
-            <div style={{ marginBottom: "clamp(14px,1.6vw,20px)" }}>
-              <p style={{
-                fontSize: "clamp(0.78rem,1.1vw,0.95rem)",
-                fontWeight: 800,
-                color: "rgb(255,255,255)",
-                marginBottom: "clamp(8px,1vw,12px)",
-                letterSpacing: "0.04em",
-                borderLeft: "3px solid rgba(255,255,255,0.4)",
-                paddingLeft: "clamp(8px,1vw,12px)",
-              }}>
-                담당 파트
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "clamp(6px,0.8vw,9px)" }}>
-                {project.roles.map(({ part, detail }, idx) => {
-                  const s = PART_STYLE[part];
-                  return (
-                    <div key={`${part}-${idx}`} style={{
-                      display: "flex", alignItems: "flex-start",
-                      gap: "clamp(10px,1.2vw,14px)",
-                      padding: "clamp(9px,1.1vw,13px) clamp(13px,1.5vw,17px)",
-                      borderRadius: 10,
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      borderLeft: `4px solid ${s.accent}`,
-                      boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
-                    }}>
-                      <span style={{
-                        flexShrink: 0, marginTop: 2,
-                        fontSize: R.partBadge, fontWeight: 700, letterSpacing: "0.04em",
-                        padding: "3px 10px", borderRadius: 6,
-                        backgroundColor: s.badgeBg, color: s.badgeText,
-                        whiteSpace: "nowrap", textTransform: "uppercase",
-                        border: "1px solid rgba(255,255,255,0.2)",
-                      }}>{part}</span>
-                      <span style={{ fontSize: R.partDetail, color: "rgb(203,213,225)", lineHeight: 1.65 }}>{detail}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <RolesSection heading={project.rolesHeading} items={project.roles} />
           )}
 
           <p style={{
@@ -706,138 +763,12 @@ export function ProjectModal({ project }: ProjectModalProps) {
               }}>
                 트러블 슈팅
               </p>
-              <div
-                className="trouble-grid grid"
-                style={{ gap: "clamp(14px,1.8vw,22px)" }}
-              >
-                {project.troubleshooting.map((item, idx) => (
-                  <div
-                    key={`ts-${idx}`}
-                    style={{
-                      padding: "clamp(16px,1.8vw,22px) clamp(18px,2vw,24px)",
-                      borderRadius: 14,
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      minWidth: 0,
-                    }}
-                  >
-                    <p style={{ fontSize: "clamp(0.82rem,1.05vw,0.94rem)", fontWeight: 800, color: "rgb(255,255,255)", marginBottom: "clamp(10px,1.2vw,14px)" }}>
-                      {item.title}
-                    </p>
-                    <p style={{ fontSize: "clamp(0.72rem,0.95vw,0.82rem)", color: "rgb(203,213,225)", lineHeight: 1.6, marginBottom: "clamp(4px,0.6vw,6px)" }}>
-                      <strong style={{ color: "rgb(226,232,240)" }}>문제:</strong> {item.problem}
-                    </p>
-                    {item.cause && (
-                      <p style={{ fontSize: "clamp(0.72rem,0.95vw,0.82rem)", color: "rgb(203,213,225)", lineHeight: 1.6, marginBottom: "clamp(4px,0.6vw,6px)" }}>
-                        <strong style={{ color: "rgb(226,232,240)" }}>원인:</strong> {item.cause}
-                      </p>
-                    )}
-                    <p style={{ fontSize: "clamp(0.72rem,0.95vw,0.82rem)", color: "rgb(203,213,225)", lineHeight: 1.6, marginBottom: item.result || item.metrics ? "clamp(4px,0.6vw,6px)" : 0 }}>
-                      <strong style={{ color: "rgb(226,232,240)" }}>해결:</strong> {item.solution}
-                    </p>
-                    {item.result && (
-                      <p style={{ fontSize: "clamp(0.72rem,0.95vw,0.82rem)", color: "rgb(203,213,225)", lineHeight: 1.6, marginBottom: item.metrics ? "clamp(4px,0.6vw,6px)" : 0 }}>
-                        <strong style={{ color: "rgb(226,232,240)" }}>결과:</strong> {item.result}
-                      </p>
-                    )}
-                    {item.metrics && (
-                      <div
-                        style={{
-                          marginTop: "clamp(12px,1.4vw,16px)",
-                          marginBottom: 0,
-                          padding: "clamp(12px,1.4vw,16px) clamp(14px,1.6vw,18px)",
-                          borderRadius: 10,
-                          backgroundColor: "rgba(0,0,0,0.2)",
-                          boxShadow: "0 1px 2px rgba(0,0,0,0.2)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                        }}
-                      >
-                        <p style={{ fontSize: "clamp(0.68rem,0.88vw,0.78rem)", fontWeight: 700, color: "rgb(148,163,184)", marginBottom: 8 }}>
-                          {item.metrics.label}
-                        </p>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
-                          <span style={{ fontSize: "clamp(0.72rem,0.9vw,0.82rem)", color: "rgb(203,213,225)", padding: "4px 8px", borderRadius: 6, backgroundColor: "rgba(255,255,255,0.08)" }}>
-                            Before {item.metrics.before}
-                          </span>
-                          <span style={{ color: "rgb(148,163,184)", fontWeight: 700 }}>➔</span>
-                          <span style={{ fontSize: "clamp(0.72rem,0.9vw,0.82rem)", fontWeight: 700, padding: "4px 8px", borderRadius: 6, backgroundColor: "rgba(34,197,94,0.2)", color: "#4ade80" }}>
-                            After {item.metrics.after}
-                          </span>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          <span style={{ fontSize: "clamp(0.78rem,1vw,0.88rem)", fontWeight: 800, color: "#4ade80" }}>
-                            ⬇ {item.metrics.improvementPercent}% 개선
-                          </span>
-                        </div>
-                        <div style={{ marginTop: 8, height: 8, borderRadius: 4, backgroundColor: "rgba(255,255,255,0.1)", overflow: "hidden", display: "flex" }}>
-                          <div
-                            style={{
-                              width: `${100 - item.metrics.improvementPercent}%`,
-                              height: "100%",
-                              backgroundColor: "#22c55e",
-                            }}
-                          />
-                          <div
-                            style={{
-                              width: `${item.metrics.improvementPercent}%`,
-                              height: "100%",
-                              backgroundColor: "rgba(255,255,255,0.08)",
-                            }}
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <TroubleshootingList items={project.troubleshooting} />
             </div>
           )}
 
           {project.id !== 2 && project.techDecisions && project.techDecisions.length > 0 && (
-            <div
-              style={{
-                marginTop: "clamp(16px,2vw,24px)",
-                padding: "clamp(16px,2vw,22px) clamp(18px,2.2vw,26px)",
-                borderRadius: 16,
-                backgroundColor: "rgba(255,255,255,0.05)",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
-                border: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              <p style={{
-                fontSize: "clamp(0.78rem,1.1vw,0.95rem)",
-                fontWeight: 800,
-                color: "rgb(255,255,255)",
-                marginBottom: "clamp(8px,1vw,12px)",
-                letterSpacing: "0.04em",
-                borderLeft: "3px solid rgba(255,255,255,0.4)",
-                paddingLeft: "clamp(8px,1vw,12px)",
-              }}>
-                기술적 의사결정
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,1.4vw,16px)" }}>
-                {project.techDecisions.map((item, idx) => (
-                  <div
-                    key={`td-${idx}`}
-                    style={{
-                      padding: "clamp(12px,1.4vw,16px) clamp(14px,1.6vw,18px)",
-                      borderRadius: 12,
-                      backgroundColor: "rgba(0,0,0,0.2)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      borderLeft: "4px solid #64748b",
-                    }}
-                  >
-                    <p style={{ fontSize: "clamp(0.82rem,1.05vw,0.94rem)", fontWeight: 800, color: "rgb(255,255,255)", marginBottom: "clamp(6px,0.8vw,10px)" }}>
-                      {item.title}
-                    </p>
-                    <p style={{ fontSize: R.desc, color: "rgb(203,213,225)", lineHeight: 1.72 }}>
-                      {item.detail}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <TechDecisionsList items={project.techDecisions} />
           )}
 
           {project.live && (

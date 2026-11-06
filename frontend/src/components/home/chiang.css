@@ -1,0 +1,502 @@
+.chiang .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.chiang,
+.chiang * {
+  box-sizing: border-box;
+}
+
+.chiang {
+  position: relative;
+  width: 100%;
+  background-color: #0f172a;
+  color: #94a3b8;
+  line-height: 1.625;
+  -webkit-font-smoothing: antialiased;
+}
+
+.chiang ::selection {
+  background-color: #5eead4;
+  color: #134e4a;
+}
+
+.chiang-spotlight {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  transition: opacity 300ms;
+}
+
+.chiang-shell {
+  margin-inline: auto;
+  min-height: 100vh;
+  max-width: 1280px;
+  padding: 3rem 1.5rem;
+}
+
+.chiang-row {
+  display: block;
+}
+
+.chiang-header {
+  display: block;
+}
+
+.chiang-h1 {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: #e2e8f0;
+}
+
+.chiang-h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.chiang-h2 {
+  margin: 0.75rem 0 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: #e2e8f0;
+}
+
+.chiang-tagline {
+  margin: 1rem 0 0;
+  max-width: 20rem;
+  line-height: 1.5;
+}
+
+.chiang-nav {
+  display: none;
+}
+
+.chiang-nav ul {
+  margin: 4rem 0 0;
+  width: max-content;
+  padding: 0;
+  list-style: none;
+}
+
+.chiang-nav-link {
+  display: flex;
+  align-items: center;
+  padding-block: 0.75rem;
+  text-decoration: none;
+}
+
+.chiang-indicator {
+  margin-right: 1rem;
+  height: 1px;
+  width: 2rem;
+  background-color: #475569;
+  transition: width 150ms, background-color 150ms;
+}
+
+.chiang-nav-link:hover .chiang-indicator,
+.chiang-nav-link:focus-visible .chiang-indicator,
+.chiang-nav-link.is-active .chiang-indicator {
+  width: 4rem;
+  background-color: #e2e8f0;
+}
+
+.chiang-nav-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.chiang-nav-link:hover .chiang-nav-text,
+.chiang-nav-link:focus-visible .chiang-nav-text,
+.chiang-nav-link.is-active .chiang-nav-text {
+  color: #e2e8f0;
+}
+
+.chiang-social {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0 0 0.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.chiang-social li {
+  margin-right: 1.25rem;
+  flex-shrink: 0;
+}
+
+.chiang-social a {
+  display: block;
+  color: #94a3b8;
+}
+
+.chiang-social a:hover,
+.chiang-social a:focus-visible {
+  color: #e2e8f0;
+}
+
+.chiang-main {
+  padding-top: 6rem;
+}
+
+.chiang-section {
+  margin-bottom: 4rem;
+  scroll-margin-top: 4rem;
+}
+
+.chiang-mobile-label {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  width: 100vw;
+  margin: 0 -1.5rem 1rem;
+  padding: 1.25rem 1.5rem;
+  background-color: rgb(15 23 42 / 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.chiang-mobile-label h2 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e2e8f0;
+}
+
+.chiang-copy p {
+  margin: 0 0 1rem;
+}
+
+.chiang-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.chiang-inline {
+  font-weight: 500;
+  color: #e2e8f0;
+  text-decoration: none;
+}
+
+.chiang-inline:hover,
+.chiang-inline:focus-visible {
+  color: #5eead4;
+}
+
+.chiang-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chiang-item {
+  margin-bottom: 3rem;
+}
+
+.chiang-card {
+  position: relative;
+  display: grid;
+  padding-bottom: 0.25rem;
+  transition: opacity 150ms;
+}
+
+.chiang-glow {
+  display: none;
+}
+
+.chiang-period {
+  z-index: 10;
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.chiang-body {
+  z-index: 10;
+}
+
+.chiang-title {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.375;
+  color: #e2e8f0;
+}
+
+.chiang-title-link {
+  position: static;
+  display: inline-flex;
+  align-items: baseline;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #e2e8f0;
+  text-decoration: none;
+}
+
+.chiang-title-hit {
+  display: none;
+}
+
+.chiang-arrow {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+  flex-shrink: 0;
+  transform: translateY(1px);
+  transition: transform 150ms;
+}
+
+.chiang-title-link:hover .chiang-arrow,
+.chiang-title-link:focus-visible .chiang-arrow {
+  transform: translate(0.25rem, -0.25rem);
+}
+
+.chiang-desc {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.chiang-pills {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chiang-pills li {
+  margin: 0.5rem 0.375rem 0 0;
+}
+
+.chiang-pill {
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+  background-color: rgb(45 212 191 / 0.1);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: #5eead4;
+}
+
+.chiang-cta {
+  margin-top: 3rem;
+}
+
+.chiang-cta-link {
+  display: inline-flex;
+  align-items: baseline;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #e2e8f0;
+  text-decoration: none;
+}
+
+.chiang-cta-link:hover .chiang-arrow,
+.chiang-cta-link:focus-visible .chiang-arrow {
+  transform: translate(0.25rem, -0.25rem);
+}
+
+.chiang-archive-text {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 150ms;
+}
+
+.chiang-cta-link:hover .chiang-archive-text {
+  border-bottom-color: #5eead4;
+}
+
+.chiang-media {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  border: 2px solid rgb(226 232 240 / 0.1);
+  transition: border-color 150ms;
+}
+
+.chiang-card:hover .chiang-media {
+  border-color: rgb(226 232 240 / 0.3);
+}
+
+@media (min-width: 640px) {
+  .chiang-h1 {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .chiang-h2 {
+    font-size: 1.25rem;
+  }
+
+  .chiang-card {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .chiang-period {
+    grid-column: span 2 / span 2;
+  }
+
+  .chiang-body {
+    grid-column: span 6 / span 6;
+  }
+
+  .chiang-body.is-project {
+    order: 2;
+    grid-column: span 6 / span 6;
+  }
+
+  .chiang-body.is-full {
+    grid-column: span 8 / span 8;
+  }
+
+  .chiang-media {
+    order: 1;
+    grid-column: span 2 / span 2;
+    transform: translateY(0.25rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .chiang-shell {
+    padding: 4rem 3rem;
+  }
+
+  .chiang-mobile-label {
+    margin-left: -3rem;
+    margin-right: -3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .chiang-section {
+    margin-bottom: 6rem;
+  }
+
+  .chiang-card {
+    gap: 1rem;
+  }
+
+  .chiang-title-hit {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .chiang-shell {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .chiang-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .chiang-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-self: flex-start;
+    height: 100vh;
+    max-height: 100vh;
+    width: 48%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .chiang-nav {
+    display: block;
+  }
+
+  .chiang-main {
+    width: 52%;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .chiang-section {
+    margin-bottom: 9rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .chiang-mobile-label {
+    position: relative;
+    top: auto;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .chiang-glow {
+    display: block;
+    position: absolute;
+    inset: -1rem -1.5rem;
+    z-index: 0;
+    border-radius: 0.375rem;
+    transition: background-color 150ms, box-shadow 150ms, filter 150ms;
+  }
+
+  .chiang-list:hover .chiang-card {
+    opacity: 0.5;
+  }
+
+  .chiang-list .chiang-card:hover {
+    opacity: 1;
+  }
+
+  .chiang-card:hover .chiang-glow {
+    background-color: rgb(30 41 59 / 0.5);
+    box-shadow: inset 0 1px 0 0 rgb(148 163 184 / 0.1);
+    filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  }
+
+  .chiang-title-hit {
+    display: block;
+    position: absolute;
+    inset: -0.625rem -1.5rem;
+    border-radius: 0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chiang-indicator,
+  .chiang-arrow,
+  .chiang-glow,
+  .chiang-media,
+  .chiang-archive-text,
+  .chiang-spotlight {
+    transition: none;
+  }
+}
